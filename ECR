@@ -1,0 +1,56 @@
+provider "aws" {
+  region = var.region_name # Set your preferred AWS region
+}
+
+# Create ECR Repository
+resource "aws_ecr_repository" "dev_repo" {
+  name = var.ECR_DEV  # The name of your repository
+}
+
+# Output the repository URL
+output "ecr_repository_url" {
+  value = aws_ecr_repository.my_repository.repository_url
+}
+
+
+VARIBLES.TF
+# variables.tf
+
+# The name of the ECR repository
+variable "ECR_DEV" {
+  description = "The name of the ECR repository"
+  type        = string
+  default     = "EFFORT"  # Default value, can be overridden
+}
+# name of your region
+variable "region_name" {
+  description = "name of your region"
+  type = string
+  default = "us-east-1"
+
+
+TERRAFORM.TFVARS FILE YOU CAN CUSTOMIZE
+
+# terraform.tfvars
+
+repository_name     = "EFFORT"  # Custom repository name
+region          = "us-east-1"             # Set to a different region
+
+CREATION OF MODULES
+# modules for ECR repository
+module "ecr_repository" {
+  source        = "../"  # Path to your module
+  repository_name = "EFFORT"   # The name of your ECR repository
+}
+
+# Output the repository URL
+output "ecr_repository_url" {
+  value = module.ecr_repository.repository_url
+}
+
+
+
+
+
+
+
